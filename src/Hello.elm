@@ -6,8 +6,9 @@ import List exposing (foldr, map)
 
 main =
   text 
-  <| foldr (++) ""
-  <| map fromInt [(add3 1), (sub 7 5)]
+  << foldr (++) ""
+  << map fromInt
+  <| [(add3 1), (sub 7 5)]
 
 add : Int -> Int -> Int
 add x y = x + y
