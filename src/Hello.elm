@@ -33,3 +33,8 @@ sub7 =
             \x y -> x - y
     in
     sub 7
+
+
+type Nat
+    = Z
+    | Succ Nat
