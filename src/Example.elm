@@ -6,6 +6,29 @@ import Html.Events exposing (onClick)
 import Random
 
 
+
+{-
+   [update]
+   Counter モジュールでは、update 関数はただ Model を生成するだけ
+   ここでの update 関数は Roll メッセージを受け取り、2 つの値を Tuple で返す
+-}
+
+
+type Msg
+    = Roll
+    | NewFace Int
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        Roll ->
+            ( model, Random.generate NewFace (Random.int 1 6) )
+
+        NewFace newFace ->
+            ( Model newFace, Cmd.none )
+
+
 main =
     Browser.element
         { init = init
@@ -26,24 +49,6 @@ type alias Model =
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( Model 1, Cmd.none )
-
-
-
--- Update
-
-
-type Msg
-    = Roll
-    | NewFace Int
-
-
-update msg model =
-    case msg of
-        Roll ->
-            ( model, Random.generate NewFace (Random.int 1 6) )
-
-        NewFace newFace ->
-            ( Model newFace, Cmd.none )
 
 
 
