@@ -1,13 +1,37 @@
-import Html exposing (h1, p, div, text)
+import Html exposing (p, text)
 
-import Parser exposing (Parser, oneOf)
+import Parser exposing
+  ( Parser
+  , (|.)
+  , (|=)
+  , succeed
+  , symbol
+  , float
+  , spaces
+  )
 
-import Debug exposing (..)
+import Debug exposing (log)
 
-hello = h1 [] [text "Hello"]
+import Result exposing (toMaybe)
 
-world = p [] [text "world"]
+type alias Point = { x : Float, y : Float }
+
+point : Parser Point
+point =
+  succeed Point
+    |. symbol "("
+    |. spaces
+    |= float
+    |. spaces
+    |. symbol ","
+    |. spaces
+    |= float
+    |. spaces
+    |. symbol ")"
 
 main =
-  let _ = Debug.log "ログ出力のラベル" "値" in
-    div [] [hello, world]
+  let
+    _ = log "ログ出力のラベル"
+        (Parser.run point "( 1.0 , 2.0 )" |> toMaybe)
+  in
+    p [] [text "hello, world"]
